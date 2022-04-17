@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Links extends Model
+class Link extends Model
 {
 
     public function tags()
     {
-        return $this->hasMany(Tags::class, 'link_id', 'id');
+        return $this->hasMany(Tag::class, 'link_id', 'id');
     }
 
     public function journals()
@@ -33,15 +33,15 @@ class Links extends Model
         $this->short_ally =  substr(uniqid(), 6);
         $this->save();
 
-        $tags = array_map(fn (string $tag) => new Tags(['name' => $tag]), $validated['tags']);
+        $tags = array_map(fn (string $tag) => new Tag(['name' => $tag]), $validated['tags']);
         $this->tags()->saveMany($tags);
     }
 
-    public function path($validated)
+    public function patch($validated)
     {
         $this->title = $validated['title'];
         $this->long_url =  $validated['long_url'];
-        $tags = array_map(fn (string $tag) => new Tags(['name' => $tag]), $validated['tags']);
+        $tags = array_map(fn (string $tag) => new Tag(['name' => $tag]), $validated['tags']);
         $this->tags()->delete();
         $this->tags()->saveMany($tags);
 

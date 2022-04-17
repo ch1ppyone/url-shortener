@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Journal extends Model
 {
+
+
+
     protected $fillable = ['user_agent', 'ip'];
 
 }
+
